@@ -1,0 +1,11 @@
+{
+  "server": {
+    "port": "SERVER_PORT"
+  },
+  "eventDatabase": {
+    "url": "EVENT_DATABASE_URL"
+  },
+  "eventDispatcher": {
+    "url": "EVENT_DISPATCHER_URL"
+  }
+}
