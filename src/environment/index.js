@@ -1,16 +1,16 @@
-import buildEventDatabase from './eventDatabase'
-import buildEventDispatcher from './eventDispatcher'
+import buildMongoClient from './mongoClient'
+import buildRedisClient from './redisClient'
 
 async function buildEnvironment () {
-  const eventDatabase = await buildEventDatabase()
-  const eventDispatcher = await buildEventDispatcher()
+  const mongoClient = await buildMongoClient()
+  const redisClient = await buildRedisClient()
 
   return {
-    eventDatabase,
-    eventDispatcher,
+    mongoClient,
+    redisClient,
     close () {
-      eventDatabase.close()
-      eventDispatcher.close()
+      mongoClient.close()
+      redisClient.end(false)
     }
   }
 }

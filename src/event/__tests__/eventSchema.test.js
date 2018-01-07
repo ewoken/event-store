@@ -1,6 +1,6 @@
 /* global describe, test, expect */
 
-import eventSchema from '../event-schema'
+import eventSchema from '../eventSchema'
 import Joi from 'joi'
 
 describe('eventSchema', () => {

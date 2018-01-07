@@ -2,10 +2,10 @@
   "server": {
     "port": 3000
   },
-  "eventDatabase": {
+  "mongodb": {
     "url": "mongodb://localhost:27017/event-store"
   },
-  "eventDispatcher": {
+  "redis": {
     "url": "redis://localhost:6379"
   }
 }

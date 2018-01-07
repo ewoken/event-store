@@ -1,12 +1,12 @@
 import express from 'express'
 import serviceToRoute from '../utils/serviceToRoute'
 
-import buildRepository from './eventRepository'
+import buildEventRepository from './eventRepository'
 import buildEventDispatcher from './eventDispatcher'
 import buildEventService from './eventService'
 
 function buildEventApi (environment) {
-  const eventRepository = buildRepository(environment)
+  const eventRepository = buildEventRepository(environment)
   const eventDispatcher = buildEventDispatcher(environment)
   const eventService = buildEventService({
     eventRepository,

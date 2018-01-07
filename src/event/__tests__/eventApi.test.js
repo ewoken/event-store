@@ -1,8 +1,8 @@
 /* global beforeAll, afterAll, describe, test, expect */
 
-import launchApp from '../app'
-import fetchApi from '../utils/fetchApi'
-import getBaseUrl from '../utils/getBaseUrl'
+import launchApp from '../../app'
+import fetchApi from '../../utils/fetchApi'
+import getBaseUrl from '../../utils/getBaseUrl'
 
 beforeAll(async () => {
   const server = await launchApp()

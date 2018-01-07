@@ -10,14 +10,12 @@ import bodyParser from 'body-parser'
 import enableDestroy from 'server-destroy'
 
 import buildEnvironment from './environment'
-import buildEventService from './event-service'
-import buildEventApi from './event-api'
+import buildEventApi from './event'
 
 async function buildApp () {
   const app = express()
   const environment = await buildEnvironment()
-  const eventService = buildEventService(environment)
-  const eventApi = buildEventApi({ eventService })
+  const eventApi = buildEventApi(environment)
 
   app.use(helmet())
   app.use(compression())
@@ -33,6 +31,12 @@ async function buildApp () {
       return next(err)
     }
 
+    if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+      res.status(400)
+      res.json({ error: err.message })
+      next()
+    }
+
     switch (err.name) {
       case 'ValidationError':
         res.status(400)
@@ -44,6 +48,7 @@ async function buildApp () {
         res.status(500)
         res.json({ error: `${errorId}` })
     }
+    next()
   })
 
   app.close = () => {

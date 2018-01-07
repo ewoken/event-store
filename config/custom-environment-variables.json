@@ -2,10 +2,10 @@
   "server": {
     "port": "SERVER_PORT"
   },
-  "eventDatabase": {
-    "url": "EVENT_DATABASE_URL"
+  "mongodb": {
+    "url": "MONGODB_URL"
   },
-  "eventDispatcher": {
-    "url": "EVENT_DISPATCHER_URL"
+  "redis": {
+    "url": "REDIS_URL"
   }
 }

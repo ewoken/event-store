@@ -4,7 +4,7 @@ function buildEventRepository (environment) {
   const db = environment.mongoClient
   const eventCollection = db.collection('events')
 
-  async function insertEvent (event) {
+  async function insert (event) {
     const res = await eventCollection.insert(event)
     const insertedEvent = formatMongoObject(res.ops[0])
     return insertedEvent
@@ -15,7 +15,7 @@ function buildEventRepository (environment) {
   }
 
   return {
-    insertEvent,
+    insert,
     deleteAll
   }
 }

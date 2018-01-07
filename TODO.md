@@ -1,3 +1,6 @@
 * logger config
 * log the config
-* improve event service
+* channel event in config
+* dockerFile
+* docker_compose
+* pm2
