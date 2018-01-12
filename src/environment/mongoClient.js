@@ -1,9 +1,8 @@
-import config from 'config'
 import mongodb from 'mongodb'
 
-async function buildMongoClient () {
+async function buildMongoClient (url) {
   const MongoClient = mongodb.MongoClient
-  const mongoClient = await MongoClient.connect(config.get('mongodb.url'))
+  const mongoClient = await MongoClient.connect(url)
   return mongoClient
 }
 

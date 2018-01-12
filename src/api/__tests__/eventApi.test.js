@@ -1,6 +1,6 @@
 /* global beforeAll, afterAll, describe, test, expect */
 
-import launchApp from '../../app'
+import launchApp from '../../server'
 import fetchApi from '../../utils/fetchApi'
 import getBaseUrl from '../../utils/getBaseUrl'
 

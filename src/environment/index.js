@@ -1,18 +1,20 @@
+import config from 'config'
+
 import buildMongoClient from './mongoClient'
-import buildRedisClient from './redisClient'
+import buildAMQPClient from './amqpClient'
 
 async function buildEnvironment () {
-  const mongoClient = await buildMongoClient()
-  const redisClient = await buildRedisClient()
+  const mongoClient = await buildMongoClient(config.get('mongodb.url'))
+  const amqpClient = await buildAMQPClient(config.get('rabbitmq.url'))
 
   return {
     mongoClient,
-    redisClient,
+    amqpClient,
     close () {
       mongoClient.close()
-      redisClient.end(false)
+      amqpClient.connection.close()
     }
   }
 }
 
-module.exports = buildEnvironment
+export default buildEnvironment

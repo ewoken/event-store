@@ -7,15 +7,15 @@ import cors from 'cors'
 import compression from 'compression'
 import helmet from 'helmet'
 import bodyParser from 'body-parser'
-import enableDestroy from 'server-destroy'
 
 import buildEnvironment from './environment'
-import buildEventApi from './event'
+import initServices from './services'
+import buildApi from './api'
 
 async function buildApp () {
   const app = express()
   const environment = await buildEnvironment()
-  const eventApi = buildEventApi(environment)
+  const services = await initServices(environment)
 
   app.use(helmet())
   app.use(compression())
@@ -23,7 +23,7 @@ async function buildApp () {
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({ extended: true }))
 
-  app.use('/events', eventApi)
+  buildApi(app, services)
 
   // error handler middleware
   app.use((err, req, res, next) => {
@@ -58,22 +58,4 @@ async function buildApp () {
   return app
 }
 
-async function launchApp () {
-  const app = await buildApp()
-  const server = app.listen(3000, () => {
-    logger.info('Server is listening on 3000')
-  })
-  enableDestroy(server)
-
-  server.on('close', () => {
-    logger.info('close')
-    app.close()
-  })
-
-  process.on('SIGINT', () => server.close())
-  process.on('SIGTERM', () => server.close())
-
-  return server
-}
-
-export default launchApp
+export default buildApp

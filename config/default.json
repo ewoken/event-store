@@ -5,7 +5,11 @@
   "mongodb": {
     "url": "mongodb://localhost:27017/event-store"
   },
-  "redis": {
-    "url": "redis://localhost:6379"
+  "rabbitmq": {
+    "url": "amqp://localhost:5672"
+  },
+  "eventService": {
+    "eventExchange": "eventExchange",
+    "eventQueue": "eventQueue"
   }
 }
