@@ -20,7 +20,7 @@
     "pm2": "^2.9.1",
     "redis": "^2.8.0",
     "uuid": "^3.1.0",
-    "winston": "^2.4.0"
+    "winston": "3.0.0-rc1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -33,9 +33,15 @@
     "server-destroy": "^1.0.1"
   },
   "scripts": {
-    "start": "npm run build && node build/server.js",
+    "start": "pm2 start build/server.js --name=\"event-store\"",
+    "poststart": "pm2 logs --raw",
+    "stop": "pm2 stop all",
+    "start:dev": "npm run build && node build/server.js",
     "test": "jest /src",
     "build": "babel src/ -d build",
-    "watch": "nodemon --watch src --exec npm start"
+    "watch": "nodemon --watch src --exec npm run start:dev",
+    "build-container": "npm run build && docker build -t event-store .",
+    "run-container": "docker run -it --rm -p 3000:3000 --name event-store event-store",
+    "run-with-env": "docker-compose up"
   }
 }

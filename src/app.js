@@ -1,5 +1,4 @@
 import express from 'express'
-import logger from 'winston'
 import uuid from 'uuid'
 
 // middlewares
@@ -8,6 +7,7 @@ import compression from 'compression'
 import helmet from 'helmet'
 import bodyParser from 'body-parser'
 
+import logger from './logger'
 import buildEnvironment from './environment'
 import initServices from './services'
 import buildApi from './api'
@@ -32,22 +32,22 @@ async function buildApp () {
     }
 
     if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
-      res.status(400)
+      res.statusCode = 400
       res.json({ error: err.message })
-      next()
+    } else {
+      switch (err.name) {
+        case 'ValidationError':
+          res.statusCode = 400
+          res.json({ error: err.message })
+          break
+        default:
+          const errorId = uuid()
+          logger.error(errorId, err)
+          res.statusCode = 500
+          res.json({ error: `${errorId}` })
+      }
     }
 
-    switch (err.name) {
-      case 'ValidationError':
-        res.status(400)
-        res.json({ error: err.message })
-        break
-      default:
-        const errorId = uuid()
-        logger.error(errorId, err)
-        res.status(500)
-        res.json({ error: `${errorId}` })
-    }
     next()
   })
 
