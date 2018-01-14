@@ -8,7 +8,7 @@
   "rabbitmq": {
     "url": "amqp://localhost:5672"
   },
-  "eventService": {
+  "bus": {
     "eventExchange": "eventExchange",
     "eventQueue": "eventQueue"
   }

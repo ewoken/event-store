@@ -8,7 +8,7 @@ import EventDispatcher from '../../utils/EventDispatcher'
 
 let environment, services, eventService, eventDispatcher
 beforeAll(async () => {
-  const eventExchange = config.get('eventService.eventExchange')
+  const eventExchange = config.get('bus.eventExchange')
 
   environment = await buildEnvironment()
   services = await initServices(environment)
@@ -16,6 +16,7 @@ beforeAll(async () => {
   await buildBusInterface(environment, services)
   eventDispatcher = new EventDispatcher({
     amqpClient: environment.amqpClient,
+    logger: environment.logger,
     eventExchange
   })
 
