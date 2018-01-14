@@ -4,21 +4,20 @@ import launchApp from '../../server'
 import fetchApi from '../../utils/fetchApi'
 import getBaseUrl from '../../utils/getBaseUrl'
 
+let server
 beforeAll(async () => {
-  const server = await launchApp()
-  global.server = server
+  server = await launchApp()
 })
 
 afterAll(() => {
   return new Promise(resolve => {
-    const server = global.server
     server.unref()
     server.destroy(resolve)
   })
 })
 
 describe('event api', () => {
-  const baseUrl = () => getBaseUrl(global.server)
+  const baseUrl = () => getBaseUrl(server)
 
   describe('POST /events', () => {
     const postEvent = event => fetchApi(`${baseUrl()}/events`, {

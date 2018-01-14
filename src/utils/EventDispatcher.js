@@ -1,14 +1,7 @@
-import config from 'config'
-
 class EventDispatcher {
-  constructor (eventExchange) {
+  constructor ({ amqpClient, eventExchange }) {
     this.eventExchange = eventExchange
-    this.amqpClient = null
-  }
-
-  init (amqpClient) {
     this.amqpClient = amqpClient
-    return this
   }
 
   dispatch (event) {
@@ -18,5 +11,4 @@ class EventDispatcher {
   }
 }
 
-const eventExchange = config.get('eventService.eventExchange')
-export default new EventDispatcher(eventExchange)
+export default EventDispatcher
