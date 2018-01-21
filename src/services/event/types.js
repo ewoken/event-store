@@ -5,7 +5,7 @@ const entityType = Joi.string().min(5).max(100)
 const entityId = Joi.string().min(5).max(500)
 const userId = Joi.string().min(5).max(500)
 
-export const eventSchema = Joi.object({
+export const EventInput = Joi.object({
   type: eventType.required(),
   entityType: entityType.required(),
   entityId: entityId.required(),
@@ -14,7 +14,7 @@ export const eventSchema = Joi.object({
   payload: Joi.object()
 })
 
-export const criteriaSchema = Joi.object({
+export const EventCriteriaInput = Joi.object({
   type: eventType,
   entityType: entityType
     .when('type', { is: Joi.exist(), then: Joi.required() })

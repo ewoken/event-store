@@ -1,6 +1,7 @@
 /* global describe, test, expect */
 
-import { eventSchema, criteriaSchema } from '../types'
+import assertInput from '../../../utils/assertInput'
+import { EventInput, EventCriteriaInput } from '../types'
 
 describe('eventSchema', () => {
   const baseEvent = {
@@ -12,32 +13,29 @@ describe('eventSchema', () => {
   }
 
   test('should validate an event object', () => {
-    const res = eventSchema.validate(baseEvent)
-    expect(res.error).toBe(null)
-    expect(res.value).toEqual(baseEvent)
+    const validatedEvent = assertInput(EventInput, baseEvent)
+    expect(validatedEvent).toEqual(baseEvent)
   })
 
   test('should validate when createdAt is a iso string', () => {
     const event = Object.assign({}, baseEvent, {
       createdAt: baseEvent.createdAt.toISOString()
     })
-    const res = eventSchema.validate(event)
-    expect(res.error).toBe(null)
-    expect(res.value).toEqual(baseEvent)
+    const validatedEvent = assertInput(EventInput, event)
+    expect(validatedEvent).toEqual(baseEvent)
   })
 
   test('should set a default value for createdAt', () => {
     const event = Object.assign({}, baseEvent, {
       createdAt: undefined
     })
-    const res = eventSchema.validate(event)
-    expect(res.error).toBe(null)
-    expect(res.value.createdAt).not.toBe(undefined)
+    const validatedEvent = assertInput(EventInput, event)
+    expect(validatedEvent).not.toBe(undefined)
   })
 
-  test('should reject bad event', () => {
+  test('should reject bad event', async () => {
     const event = Object.assign({}, baseEvent, { userId: undefined })
-    expect(eventSchema.validate(event).error).not.toBe(null)
+    expect(() => assertInput(EventInput, event)).toThrow(/userId/)
   })
 })
 
@@ -50,20 +48,18 @@ describe('criteria schema', () => {
       { type: 'type1', entityType: 'entityType' }
     ]
     criterias.forEach(criteria => {
-      const res = criteriaSchema.validate(criteria)
-      expect(res.error).toBe(null)
+      assertInput(EventCriteriaInput, criteria)
     })
   })
 
-  test('should validate all kinds of criteria', () => {
+  test('should not validate bad criterias', () => {
     const criterias = [
       {},
       { entityId: 'entityId' },
       { type: 'type1' }
     ]
     criterias.forEach(criteria => {
-      const res = criteriaSchema.validate(criteria)
-      expect(res.error).not.toBe(null)
+      expect(() => assertInput(EventCriteriaInput, criteria)).toThrow()
     })
   })
 })
