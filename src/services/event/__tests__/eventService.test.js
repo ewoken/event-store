@@ -1,22 +1,21 @@
-/* global beforeAll afterAll describe test expect afterEach */
+/* global beforeAll afterAll describe test expect beforeEach */
 
-import initEventService from '../index'
-import buildEnvironment from '../../../environment'
+import initEventService from '../index';
+import buildEnvironment from '../../../environment';
 
-let environment, eventService
+let environment;
+let eventService;
 beforeAll(async () => {
-  environment = await buildEnvironment()
-  eventService = await initEventService(environment)
-  return eventService.deleteAllEvents()
-})
+  environment = await buildEnvironment();
+  eventService = await initEventService(environment);
+});
 
-afterAll(() => {
-  environment.close()
-})
+beforeEach(() => eventService.deleteAllEvents());
 
-afterEach(() => {
-  return eventService.deleteAllEvents()
-})
+afterAll(async () => {
+  await eventService.deleteAllEvents();
+  environment.close();
+});
 
 describe('event service', () => {
   describe('insertEvent(event)', () => {
@@ -25,23 +24,21 @@ describe('event service', () => {
         type: 'EVENT_TEST',
         entityType: 'TEST_ENTITY',
         entityId: 'entity_id',
-        userId: 'userId'
-      }
+        userId: 'userId',
+      };
 
-      const insertedEvent = await eventService.insertEvent(testEvent)
-      expect(insertedEvent).toMatchObject(testEvent)
-    })
+      const insertedEvent = await eventService.insertEvent(testEvent);
+      expect(insertedEvent).toMatchObject(testEvent);
+    });
 
     test('should fail for a bad event', async () => {
       const badEvent = {
         // no type
         entityType: 'TEST_ENTITY',
         entityId: 'entity_id',
-        userId: 'userId'
-      }
-      await expect(eventService.insertEvent(badEvent))
-        .rejects
-        .toThrow(/type/)
-    })
-  })
-})
+        userId: 'userId',
+      };
+      await expect(eventService.insertEvent(badEvent)).rejects.toThrow(/type/);
+    });
+  });
+});

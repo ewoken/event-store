@@ -1,26 +1,26 @@
-import config from 'config'
-import logger from '@ewoken/backend-common/lib/logger'
+import config from 'config';
+import logger from '@ewoken/backend-common/lib/logger';
 
-import buildMongoClient from './mongoClient'
-import buildAMQPClient from './amqpClient'
+import buildMongoClient from './mongoClient';
+import buildAMQPClient from './amqpClient';
 
-async function buildEnvironment () {
-  logger.info('Building environment...')
-  const mongoClient = await buildMongoClient(config.get('mongodb.url'))
+async function buildEnvironment() {
+  logger.info('Building environment...');
+  const mongoClient = await buildMongoClient(config.get('mongodb.url'));
   const amqpClient = await buildAMQPClient({
     url: config.get('rabbitmq.url'),
-    logger
-  })
+    logger,
+  });
 
   return {
     mongoClient,
     amqpClient,
     logger,
-    close () {
-      mongoClient.close()
-      amqpClient.connection.close()
-    }
-  }
+    close() {
+      mongoClient.close();
+      amqpClient.connection.close();
+    },
+  };
 }
 
-export default buildEnvironment
+export default buildEnvironment;

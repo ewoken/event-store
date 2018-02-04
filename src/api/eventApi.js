@@ -1,14 +1,14 @@
-import express from 'express'
-import serviceToRoute from '@ewoken/backend-common/lib/serviceToRoute'
+import express from 'express';
+import serviceToRoute from '@ewoken/backend-common/lib/serviceToRoute';
 
-function buildEventApi (eventService) {
-  const router = new express.Router()
+function buildEventApi(eventService) {
+  const router = new express.Router();
 
-  router.post('/', serviceToRoute(eventService.insertEvent))
+  router.post('/', serviceToRoute(eventService.insertEvent));
 
   // TODO add all delete for test
 
-  return router
+  return router;
 }
 
-export default buildEventApi
+export default buildEventApi;

@@ -1,36 +1,35 @@
-import express from 'express'
+import express from 'express';
 
 // middlewares
-import cors from 'cors'
-import compression from 'compression'
-import helmet from 'helmet'
-import bodyParser from 'body-parser'
+import cors from 'cors';
+import compression from 'compression';
+import helmet from 'helmet';
+import bodyParser from 'body-parser';
 
 import {
   errorHandlerMiddleware,
   logRequestMiddleware,
-  addRequestId
-} from '@ewoken/backend-common/lib/api/customMiddleWares'
+  addRequestId,
+} from '@ewoken/backend-common/lib/api/customMiddleWares';
 
-import buildEventApi from './eventApi'
+import buildEventApi from './eventApi';
 
-function buildApi (environment, { eventService }) {
-  const logger = environment.logger
-  const app = express()
+function buildApi({ logger }, { eventService }) {
+  const app = express();
 
-  app.use(addRequestId())
-  app.use(helmet())
-  app.use(compression())
-  app.use(cors())
-  app.use(bodyParser.json())
-  app.use(bodyParser.urlencoded({ extended: true }))
+  app.use(addRequestId());
+  app.use(helmet());
+  app.use(compression());
+  app.use(cors());
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: true }));
 
-  app.use('/events', buildEventApi(eventService))
+  app.use('/events', buildEventApi(eventService));
 
-  app.use(errorHandlerMiddleware(logger))
-  app.use(logRequestMiddleware(logger))
+  app.use(errorHandlerMiddleware(logger));
+  app.use(logRequestMiddleware(logger));
 
-  return app
+  return app;
 }
 
-export default buildApi
+export default buildApi;

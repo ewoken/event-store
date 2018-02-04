@@ -1,9 +1,9 @@
-import mongodb from 'mongodb'
+import mongodb from 'mongodb';
 
-async function buildMongoClient (url) {
-  const MongoClient = mongodb.MongoClient
-  const mongoClient = await MongoClient.connect(url)
-  return mongoClient
+async function buildMongoClient(url) {
+  const { MongoClient } = mongodb;
+  const mongoClient = await MongoClient.connect(url);
+  return mongoClient;
 }
 
-export default buildMongoClient
+export default buildMongoClient;

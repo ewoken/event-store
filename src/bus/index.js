@@ -1,19 +1,19 @@
-import config from 'config'
-import EventConsumer from '@ewoken/backend-common/lib/bus/EventConsumer'
+import config from 'config';
+import EventConsumer from '@ewoken/backend-common/lib/bus/EventConsumer';
 
-async function buildBusInterface ({ amqpClient, logger }, { eventService }) {
-  const eventExchange = config.get('bus.eventExchange')
-  const eventQueue = config.get('bus.eventQueue')
+async function buildBusInterface({ amqpClient, logger }, { eventService }) {
+  const eventExchange = config.get('bus.eventExchange');
+  const eventQueue = config.get('bus.eventQueue');
   const eventConsumer = new EventConsumer({
     eventExchange,
     eventQueue,
     amqpClient,
-    logger
-  })
+    logger,
+  });
 
-  await eventConsumer.init()
+  await eventConsumer.init();
 
-  eventConsumer.onEvent(eventService.insertEvent)
+  eventConsumer.onEvent(eventService.insertEvent);
 }
 
-export default buildBusInterface
+export default buildBusInterface;

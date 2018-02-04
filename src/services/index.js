@@ -1,12 +1,12 @@
-import initEventService from './event'
+import initEventService from './event';
 
-async function initServices (environment) {
-  environment.logger.info('Init services...')
-  const services = {}
+async function initServices(environment) {
+  environment.logger.info('Init services...');
+  const services = {};
 
-  services.eventService = await initEventService(environment)
+  services.eventService = await initEventService(environment);
 
-  return services
+  return services;
 }
 
-export default initServices
+export default initServices;

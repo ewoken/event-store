@@ -1,35 +1,36 @@
 /* global beforeAll afterAll describe test expect beforeEach */
-import config from 'config'
-import EventDispatcher from '@ewoken/backend-common/lib/bus/EventDispatcher'
+import config from 'config';
+import EventDispatcher from '@ewoken/backend-common/lib/bus/EventDispatcher';
 
-import buildEnvironment from '../../environment'
-import initServices from '../../services'
-import buildBusInterface from '../index'
+import buildEnvironment from '../../environment';
+import initServices from '../../services';
+import buildBusInterface from '../index';
 
 // TODO server
-let environment, services, eventService, eventDispatcher
+let environment;
+let services;
+let eventService;
+let eventDispatcher;
 beforeAll(async () => {
-  const eventExchange = config.get('bus.eventExchange')
+  const eventExchange = config.get('bus.eventExchange');
 
-  environment = await buildEnvironment()
-  services = await initServices(environment)
-  eventService = services.eventService
-  await buildBusInterface(environment, services)
+  environment = await buildEnvironment();
+  services = await initServices(environment);
+  ({ eventService } = services);
+  await buildBusInterface(environment, services);
   eventDispatcher = new EventDispatcher({
     amqpClient: environment.amqpClient,
     logger: environment.logger,
-    eventExchange
-  })
-})
+    eventExchange,
+  });
+});
 
-beforeEach(() => {
-  return eventService.deleteAllEvents()
-})
+beforeEach(() => eventService.deleteAllEvents());
 
 afterAll(() => {
-  environment.close()
-  return eventService.deleteAllEvents()
-})
+  environment.close();
+  return eventService.deleteAllEvents();
+});
 
 describe('event handler', () => {
   test('should insert an event', async () => {
@@ -37,13 +38,15 @@ describe('event handler', () => {
       type: 'EVENT_TEST',
       entityType: 'TEST_ENTITY',
       entityId: 'entity_id',
-      userId: 'userId'
-    }
+      userId: 'userId',
+    };
 
-    eventDispatcher.dispatch(testEvent)
-    await new Promise(resolve => setTimeout(resolve, 100))
-    const events = await eventService.getEventListByCriteria({ userId: 'userId' })
-    expect(events.length).toEqual(1)
-    expect(events[0].type).toEqual('EVENT_TEST')
-  })
-})
+    eventDispatcher.dispatch(testEvent);
+    await new Promise(resolve => setTimeout(resolve, 100));
+    const events = await eventService.getEventListByCriteria({
+      userId: 'userId',
+    });
+    expect(events.length).toEqual(1);
+    expect(events[0].type).toEqual('EVENT_TEST');
+  });
+});
