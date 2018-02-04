@@ -1,13 +1,16 @@
 import config from 'config'
+import logger from '@ewoken/backend-common/lib/logger'
 
 import buildMongoClient from './mongoClient'
 import buildAMQPClient from './amqpClient'
-import logger from './logger'
 
 async function buildEnvironment () {
   logger.info('Building environment...')
   const mongoClient = await buildMongoClient(config.get('mongodb.url'))
-  const amqpClient = await buildAMQPClient(config.get('rabbitmq.url'))
+  const amqpClient = await buildAMQPClient({
+    url: config.get('rabbitmq.url'),
+    logger
+  })
 
   return {
     mongoClient,

@@ -1,7 +1,6 @@
 import amqp from 'amqplib'
-import logger from 'winston'
 
-async function buildAMQPClient (url) {
+async function buildAMQPClient ({ url, logger }) {
   const connection = await amqp.connect(url)
   const channel = await connection.createChannel()
 

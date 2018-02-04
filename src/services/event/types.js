@@ -1,7 +1,7 @@
 import Joi from 'joi'
 
 const eventType = Joi.string().min(5).max(100)
-const entityType = Joi.string().min(5).max(100)
+const entityType = Joi.string().min(3).max(100)
 const entityId = Joi.string().min(5).max(500)
 const userId = Joi.string().min(5).max(500)
 

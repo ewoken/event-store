@@ -1,8 +1,8 @@
 /* global beforeAll, afterAll, describe, test, expect */
 
 import launchApp from '../../server'
-import fetchApi from '../../utils/fetchApi'
-import getBaseUrl from '../../utils/getBaseUrl'
+import fetchApi from '@ewoken/backend-common/lib/fetchApi'
+import getBaseUrl from '@ewoken/backend-common/lib/getBaseUrl'
 
 let server
 beforeAll(async () => {

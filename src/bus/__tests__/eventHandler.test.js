@@ -1,11 +1,12 @@
-/* global beforeAll afterAll describe test expect afterEach */
+/* global beforeAll afterAll describe test expect beforeEach */
 import config from 'config'
+import EventDispatcher from '@ewoken/backend-common/lib/bus/EventDispatcher'
 
 import buildEnvironment from '../../environment'
 import initServices from '../../services'
 import buildBusInterface from '../index'
-import EventDispatcher from '../../utils/EventDispatcher'
 
+// TODO server
 let environment, services, eventService, eventDispatcher
 beforeAll(async () => {
   const eventExchange = config.get('bus.eventExchange')
@@ -19,15 +20,14 @@ beforeAll(async () => {
     logger: environment.logger,
     eventExchange
   })
+})
 
+beforeEach(() => {
   return eventService.deleteAllEvents()
 })
 
 afterAll(() => {
   environment.close()
-})
-
-afterEach(() => {
   return eventService.deleteAllEvents()
 })
 

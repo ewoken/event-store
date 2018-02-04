@@ -1,15 +1,19 @@
 import enableDestroy from 'server-destroy'
 
 import buildEnvironment from './environment'
-import buildApp from './app'
+import initServices from './services'
+import buildBusInterface from './bus'
+import buildApi from './api'
 
 async function launchApp () {
   const environment = await buildEnvironment()
-  const app = await buildApp(environment)
-  const logger = environment.logger
+  const services = await initServices(environment)
+  await buildBusInterface(environment, services)
+  const app = await buildApi(environment, services)
 
-  const server = app.listen(3000, () => {
-    logger.info('Server is listening on', { port: 3000 })
+  const { logger } = environment
+  const server = app.listen(3001, () => {
+    logger.info('Server is listening on', { port: 3001 })
   })
   enableDestroy(server)
 
@@ -20,6 +24,11 @@ async function launchApp () {
 
   process.on('SIGINT', () => server.close())
   process.on('SIGTERM', () => server.close())
+  process.on('unhandledRejection', (reason, p) => {
+    logger.error(`Unhandled Rejection at: ${p} reason: ${reason}`)
+    server.close()
+    process.exit(1)
+  })
 
   return server
 }

@@ -1,6 +1,6 @@
 {
   "server": {
-    "port": 3000
+    "port": 3001
   },
   "mongodb": {
     "url": "mongodb://localhost:27017/event-store"

@@ -1,6 +1,6 @@
 /* global describe, test, expect */
 
-import assertInput from '../../../utils/assertInput'
+import { assertInput } from '@ewoken/backend-common/lib/assertSchema'
 import { EventInput, EventCriteriaInput } from '../types'
 
 describe('eventSchema', () => {

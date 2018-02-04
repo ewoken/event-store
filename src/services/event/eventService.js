@@ -1,6 +1,10 @@
-import assertInput from '../../utils/assertInput'
+import { EventEmitter } from 'events'
+import { assertInput } from '@ewoken/backend-common/lib/assertSchema'
+
 import { EventInput, EventCriteriaInput } from './types'
 import eventRepository from './eventRepository'
+
+const bus = new EventEmitter()
 
 async function insertEvent (event) {
   const newEvent = assertInput(EventInput, event)
@@ -18,6 +22,8 @@ function deleteAllEvents () {
 }
 
 export default {
+  bus,
+
   insertEvent,
   getEventListByCriteria,
   deleteAllEvents

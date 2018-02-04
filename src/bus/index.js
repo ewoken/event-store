@@ -1,5 +1,5 @@
 import config from 'config'
-import EventConsumer from '../utils/EventConsumer'
+import EventConsumer from '@ewoken/backend-common/lib/bus/EventConsumer'
 
 async function buildBusInterface ({ amqpClient, logger }, { eventService }) {
   const eventExchange = config.get('bus.eventExchange')

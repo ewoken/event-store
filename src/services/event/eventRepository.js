@@ -1,4 +1,4 @@
-import formatMongoObject from '../../utils/formatMongoObject'
+import formatMongoObject from '@ewoken/backend-common/lib/formatMongoObject'
 
 class EventRepository {
   constructor () {

@@ -1,6 +1,6 @@
 import eventService from './eventService'
 import eventRepository from './eventRepository'
-import withLogger from '../../utils/withLoggerService'
+import withLogger from '@ewoken/backend-common/lib/withLoggerService'
 
 async function initEventService ({ mongoClient, logger }) {
   logger.info('Init event service')
