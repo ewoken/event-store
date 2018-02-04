@@ -17,6 +17,8 @@ import buildEventApi from './eventApi';
 function buildApi({ logger }, { eventService }) {
   const app = express();
 
+  // TODO session
+
   app.use(addRequestId());
   app.use(helmet());
   app.use(compression());
