@@ -38,7 +38,7 @@ describe('event handler', () => {
       type: 'EVENT_TEST',
       entityType: 'TEST_ENTITY',
       entityId: 'entity_id',
-      userId: 'userId',
+      authorUserId: 'userId',
     };
 
     eventDispatcher.dispatch(testEvent);

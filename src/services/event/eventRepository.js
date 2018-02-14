@@ -18,7 +18,12 @@ class EventRepository {
     return insertedEvent;
   }
 
-  async getEventListByCriteria(criteria) {
+  async getEventListByCriteria(inputCriteria) {
+    const { userId, ...others } = inputCriteria;
+    const criteria = {
+      ...others,
+      $or: [{ authorUserId: userId }, { targetUserId: userId }],
+    };
     const eventList = await this.eventCollection
       .find(criteria)
       .limit(100)

@@ -6,10 +6,12 @@ import { EventInput, EventCriteriaInput } from '../types';
 describe('eventSchema', () => {
   const baseEvent = {
     type: 'TEST_EVENT',
-    userId: null,
+    authorUserId: null,
+    targetUserId: null,
     entityType: 'TEST_ENTITY',
     entityId: '00000000000000',
     createdAt: new Date(),
+    payload: null,
   };
 
   test('should validate an event object', () => {
@@ -18,24 +20,23 @@ describe('eventSchema', () => {
   });
 
   test('should validate when createdAt is a iso string', () => {
-    const event = Object.assign({}, baseEvent, {
+    const event = {
+      ...baseEvent,
       createdAt: baseEvent.createdAt.toISOString(),
-    });
+    };
     const validatedEvent = assertInput(EventInput, event);
     expect(validatedEvent).toEqual(baseEvent);
   });
 
   test('should set a default value for createdAt', () => {
-    const event = Object.assign({}, baseEvent, {
-      createdAt: undefined,
-    });
+    const event = { ...baseEvent, createdAt: undefined };
     const validatedEvent = assertInput(EventInput, event);
     expect(validatedEvent).not.toBe(undefined);
   });
 
   test('should reject bad event', async () => {
-    const event = Object.assign({}, baseEvent, { userId: undefined });
-    expect(() => assertInput(EventInput, event)).toThrow(/userId/);
+    const event = { ...baseEvent, authorUserId: undefined };
+    expect(() => assertInput(EventInput, event)).toThrow(/authorUserId/);
   });
 });
 

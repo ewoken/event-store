@@ -33,7 +33,7 @@ describe('event api', () => {
         type: 'EVENT_TEST',
         entityType: 'TEST_ENTITY',
         entityId: 'entity_id',
-        userId: 'userId',
+        authorUserId: 'userId',
       };
       const returnedEvent = await postEvent(testEvent);
       expect(returnedEvent).toMatchObject(testEvent);
@@ -44,7 +44,7 @@ describe('event api', () => {
         // no type
         entityType: 'TEST_ENTITY',
         entityId: 'entity_id',
-        userId: 'userId',
+        authorUserId: 'userId',
       };
 
       await expect(postEvent(badEvent)).rejects.toThrow(/400/);

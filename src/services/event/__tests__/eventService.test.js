@@ -24,7 +24,7 @@ describe('event service', () => {
         type: 'EVENT_TEST',
         entityType: 'TEST_ENTITY',
         entityId: 'entity_id',
-        userId: 'userId',
+        authorUserId: 'userId',
       };
 
       const insertedEvent = await eventService.insertEvent(testEvent);
@@ -36,7 +36,7 @@ describe('event service', () => {
         // no type
         entityType: 'TEST_ENTITY',
         entityId: 'entity_id',
-        userId: 'userId',
+        authorUserId: 'userId',
       };
       await expect(eventService.insertEvent(badEvent)).rejects.toThrow(/type/);
     });
