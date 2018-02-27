@@ -38,9 +38,10 @@ export const EventInput = Joi.object({
 
 export const EventCriteriaInput = Joi.object({
   type: eventType,
-  entityType: entityType
-    .when('type', { is: Joi.exist(), then: Joi.required() })
-    .when('entityId', { is: Joi.exist(), then: Joi.required() }),
+  entityType,
   entityId,
   userId: userId.allow(null),
-}).min(1);
+})
+  .min(1)
+  .with('type', 'entityType')
+  .with('entityId', 'entityType');

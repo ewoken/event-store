@@ -1,13 +1,14 @@
 /* global beforeAll afterAll describe test expect beforeEach */
 
-import initEventService from '../index';
+import EventService from '../index';
 import buildEnvironment from '../../../environment';
 
 let environment;
 let eventService;
 beforeAll(async () => {
   environment = await buildEnvironment();
-  eventService = await initEventService(environment);
+  eventService = new EventService(environment);
+  await eventService.init();
 });
 
 beforeEach(() => eventService.deleteAllEvents());

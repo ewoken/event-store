@@ -1,14 +1,12 @@
 import formatMongoObject from '@ewoken/backend-common/lib/formatMongoObject';
 
 class EventRepository {
-  constructor() {
-    this.db = null;
-    this.eventCollection = null;
+  constructor({ mongoClient }) {
+    this.db = mongoClient;
+    this.eventCollection = this.db.collection('events');
   }
 
-  init(db) {
-    this.db = db;
-    this.eventCollection = this.db.collection('events');
+  init() {
     return this;
   }
 
@@ -36,4 +34,4 @@ class EventRepository {
   }
 }
 
-export default new EventRepository();
+export default EventRepository;

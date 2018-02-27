@@ -1,16 +1,33 @@
-import withLogger from '@ewoken/backend-common/lib/withLoggerService';
+import { assertInput } from '@ewoken/backend-common/lib/assertSchema';
+import Service from '@ewoken/backend-common/lib/Service';
 
-import eventService from './eventService';
-import eventRepository from './eventRepository';
+import { EventInput, EventCriteriaInput } from './types';
+import EventRepository from './EventRepository';
 
-async function initEventService({ mongoClient, logger }) {
-  logger.info('Init event service');
-  eventRepository.init(mongoClient);
+class EventService extends Service {
+  constructor(environment) {
+    super('eventService', environment);
+    this.eventRepository = new EventRepository(environment);
+  }
 
-  return withLogger(logger)({
-    serviceName: 'eventService',
-    service: eventService,
-  });
+  async init() {
+    this.eventRepository.init();
+  }
+
+  async insertEvent(event) {
+    const newEvent = assertInput(EventInput, event);
+    const insertedEvent = await this.eventRepository.insert(newEvent);
+    return insertedEvent;
+  }
+
+  async getEventListByCriteria(criteria) {
+    const newCriteria = assertInput(EventCriteriaInput, criteria);
+    return this.eventRepository.getEventListByCriteria(newCriteria);
+  }
+
+  deleteAllEvents() {
+    return this.eventRepository.deleteAll();
+  }
 }
 
-export default initEventService;
+export default EventService;
