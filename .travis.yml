@@ -1,0 +1,13 @@
+sudo: required
+
+language: node_js
+node_js:
+  - "8"
+
+services:
+  - mongodb
+  - rabbitmq
+
+env:
+  MONGODB_URL=mongodb://localhost:27017/event-store
+  RABBITMQ_URL=amqp://guest:guest@localhost:5672
