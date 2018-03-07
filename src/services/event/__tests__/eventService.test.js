@@ -1,5 +1,3 @@
-/* global beforeAll afterAll describe test expect beforeEach */
-
 import EventService from '../index';
 import buildEnvironment from '../../../environment';
 
@@ -39,7 +37,9 @@ describe('event service', () => {
         entityId: 'entity_id',
         authorUserId: 'userId',
       };
-      await expect(eventService.insertEvent(badEvent)).rejects.toThrow(/type/);
+      await expect(eventService.insertEvent(badEvent)).rejects.toThrow(
+        /Validation/,
+      );
     });
   });
 });

@@ -1,4 +1,3 @@
-/* global beforeAll afterAll describe test expect beforeEach */
 import config from 'config';
 import EventDispatcher from '@ewoken/backend-common/lib/bus/EventDispatcher';
 

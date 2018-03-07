@@ -1,5 +1,3 @@
-/* global describe, test, expect */
-
 import { assertInput } from '@ewoken/backend-common/lib/assertSchema';
 import { EventInput, EventCriteriaInput } from '../types';
 
@@ -36,7 +34,7 @@ describe('eventSchema', () => {
 
   test('should reject bad event', async () => {
     const event = { ...baseEvent, authorUserId: undefined };
-    expect(() => assertInput(EventInput, event)).toThrow(/authorUserId/);
+    expect(() => assertInput(EventInput, event)).toThrow(/Validation/);
   });
 });
 

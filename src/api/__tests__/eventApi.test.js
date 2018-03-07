@@ -1,5 +1,3 @@
-/* global beforeAll, afterAll, describe, test, expect */
-
 import fetchApi from '@ewoken/backend-common/lib/fetchApi';
 import getBaseUrl from '@ewoken/backend-common/lib/getBaseUrl';
 
@@ -47,7 +45,7 @@ describe('event api', () => {
         authorUserId: 'userId',
       };
 
-      await expect(postEvent(badEvent)).rejects.toThrow(/400/);
+      await expect(postEvent(badEvent)).rejects.toThrow(/Validation/);
     });
   });
 });
