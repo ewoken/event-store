@@ -9,7 +9,9 @@ import bodyParser from 'body-parser';
 import {
   errorHandlerMiddleware,
   logRequestMiddleware,
-  addRequestId,
+  addRequestIdMiddleware,
+  notFoundMiddleware,
+  debug as debugMiddleware,
 } from '@ewoken/backend-common/lib/api/customMiddleWares';
 
 import buildEventApi from './eventApi';
@@ -19,15 +21,17 @@ function buildApi({ logger }, { eventService }) {
 
   // TODO session
 
-  app.use(addRequestId());
+  app.use(addRequestIdMiddleware());
   app.use(helmet());
   app.use(compression());
   app.use(cors());
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(debugMiddleware());
 
   app.use('/events', buildEventApi(eventService));
 
+  app.use(notFoundMiddleware());
   app.use(errorHandlerMiddleware(logger));
   app.use(logRequestMiddleware(logger));
 
