@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@ewoken/backend-common": "1.0.7",
+    "@ewoken/backend-common": "1.0.8",
     "amqplib": "^0.5.2",
     "babel-runtime": "^6.26.0",
     "bluebird": "^3.5.1",
