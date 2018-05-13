@@ -1,5 +1,5 @@
 import express from 'express';
-import serviceToRoute from '@ewoken/backend-common/lib/serviceToRoute';
+import serviceToRoute from '@ewoken/backend-common/lib/api/serviceToRoute';
 
 function buildEventApi(eventService) {
   const router = new express.Router();
